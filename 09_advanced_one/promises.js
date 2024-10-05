@@ -99,19 +99,26 @@ const promiseSix = new Promise(function(resolve, reject){
 
 // This async function can't handle error from promiseSix
     // async function consume_SIX(){
-    //     const response = await promiseSix
-    //     console.log(response);
-    // }
-
-async function consume_SIX(){
-    try {
-        const response = await promiseSix
+    //     const response = await promiseSix  ---
+    //     console.log(response);                 \
+    // }                                           |
+                                         //        |
+// With try-catch block                            |
+async function consume_SIX(){            //        |    
+    try {                                //       /  
+        const response = await promiseSix//   <---   
         console.log(response);   
     } catch (error) {
         console.log(error);
         
     }
 }
-
-
 consume_SIX()
+
+
+async function getAllUsers() {
+    const response = await fetch('https://api.github.com/users/artistberg')
+    const data = response.json()// string to json
+    console.log(data);
+}
+getAllUsers();
