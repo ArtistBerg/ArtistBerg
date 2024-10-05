@@ -1,0 +1,61 @@
+<!-- Writing first time XML -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API requests</title> 
+    <style>
+        img{
+            height: 100px;
+            border-radius: 100px;
+        }
+        .user{
+            color: aliceblue;
+        }
+    </style>
+</head>
+
+<body style="background-color: #212121;">
+    <div class="user">
+        <img  src="" alt="photo">
+        <div>
+            <a id="name"></a>
+            <p>followers</p>
+        </div>
+    </div>
+</body>
+
+<script>
+//account direct link
+    const requestUrl = 'https://api.github.com/users/artistberg'
+    const XMLreq = new XMLHttpRequest();
+
+    XMLreq.onreadystatechange = function(){
+
+        console.log(`${XMLreq.readyState}`);
+
+            if(XMLreq.readyState === 4){// 4: done
+
+            //const data = this.responseText; //string format
+                const data = JSON.parse(this.responseText); // JSON format convert
+                    console.log(typeof data);
+                    console.log(data.login);
+                let photo_url = data.avatar_url;
+                    console.log(photo_url);
+                    console.log(data.followers);
+                    
+            //photo insertion in img tag
+            const img =  document.querySelector('img');
+            img.src = photo_url
+            document.getElementById('name').innerHTML = `Name: ${data.login}`//name
+            const f = document.querySelector('p') //followers
+            f.innerHTML =  `followers: ${data.followers}`
+           }
+    }
+    XMLreq.open('GET', requestUrl)
+    XMLreq.send()
+
+</script>
+</html>
